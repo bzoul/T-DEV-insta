@@ -7,15 +7,11 @@ import {NavigationContainer} from '@react-navigation/native'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/*<Login/>*/}
-      {/*<Register/>*/}
-      <NavigationContainer>
+    <NavigationContainer>
         <ToolBar>
 
         </ToolBar>
       </NavigationContainer>
-    </View>
   );
 }
 
