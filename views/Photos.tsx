@@ -5,7 +5,7 @@ const Photos = ({navigation}) => {
     return(
         <View style={styles.container}>
             <Text>
-                Photos screen
+                Photo screen
             </Text>
         </View>
     );
