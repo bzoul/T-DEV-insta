@@ -1,67 +1,92 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AppRegistry } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
-const PendingView = () => (
-    <View
-        style={{
-            flex: 1,
-            backgroundColor: 'lightgreen',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}
-    >
-        <Text>Waiting</Text>
-    </View>
-);
+interface State { // Added this interface for props
+    torchon : RNCamera
+  }
 
-const AppareilPhotos = ({ navigation }) => {
-    return (
-        
-        <View style={styles.container}>
-            <RNCamera
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                androidCameraPermissionOptions={{
-                    title: 'Permission to use camera',
-                    message: 'We need your permission to use your camera',
-                    buttonPositive: 'Ok',
-                    buttonNegative: 'Cancel',
-                }}
-                androidRecordAudioPermissionOptions={{
-                    title: 'Permission to use audio recording',
-                    message: 'We need your permission to use your audio',
-                    buttonPositive: 'Ok',
-                    buttonNegative: 'Cancel',
-                }}
-            >
+export class AppareilPhoto extends React.Component<{},State>{
+    constructor(props:State) {
+        super(props);
+        this.state = {
+            torchon : RNCamera.Constants.FlashMode.off
+        };
+    }
 
-                {({ camera, status, recordAudioPermissionStatus }) => {
-                    if (status !== 'READY') return <PendingView />;
-                    return (
-                        <> 
-                            <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-                                <TouchableOpacity onPress={() => takePicture(camera)} style={styles.capture}>
-                                    <Text style={{ fontSize: 15 }}> SNAP </Text>
-                                </TouchableOpacity>
+    async takePicture(camera) {
+        const options = { quality: 0.5, base64: true };
+        const data = await camera.takePictureAsync(options);
+        //  eslint-disable-next-line
+        console.log(data.uri);
+    };
+    
+    async toggleTorch() {
+        let tstate = this.state.torchon;
+        if (tstate == RNCamera.Constants.FlashMode.off) {
+            tstate = RNCamera.Constants.FlashMode.on;
+        } else {
+            tstate = RNCamera.Constants.FlashMode.off;
+        }
+        this.setState({ torchon: tstate })
+    }
+    render() {
+        const {torchon} =  this.state;
+
+        return (
+            <View style={styles.container}>
+                <RNCamera
+                    style={styles.preview}
+                    type={RNCamera.Constants.Type.back}
+                    androidCameraPermissionOptions={{
+                        title: 'Permission to use camera',
+                        message: 'We need your permission to use your camera',
+                        buttonPositive: 'Ok',
+                        buttonNegative: 'Cancel',
+                    }}
+                    androidRecordAudioPermissionOptions={{
+                        title: 'Permission to use audio recording',
+                        message: 'We need your permission to use your audio',
+                        buttonPositive: 'Ok',
+                        buttonNegative: 'Cancel',
+                    }}
+                >
+                    {({ camera, status }) => {
+                        if (status !== 'READY') return (
+                            < View
+                                style={{
+                                    flex: 1,
+                                    backgroundColor: 'lightgreen',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text>Waiting</Text>
                             </View>
-                        </>
-                    );
-                }}
-            </RNCamera>
-        </View>
-    );
+                        );
+                        return (
+                            <>
+                                <TouchableOpacity style={styles.flash} onPress={() => this.toggleTorch()}>
+                                    {this.state.torchon == RNCamera.Constants.FlashMode.off?  
+                                    <Image style = {styles.flashlite} source = {require('../assets/flash_off_icon.png')}/> : 
+                                    <Image style = {styles.flashlite} source = {require('../assets/flash_on_icon.png')}/>}
+                                </TouchableOpacity>
+
+                                <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+                                    <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
+                                        <Text style={{ fontSize: 15 }}> SNAP </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </>
+                        );
+                    }}
+                </RNCamera>
+            </View >
+        );
+    }
 }
 
-async function takePicture(camera) {
-    const options = { quality: 0.5, base64: true };
-    const data = await camera.takePictureAsync(options);
-    //  eslint-disable-next-line
-    console.log(data.uri);
-};
-
-export default AppareilPhotos;
+export default AppareilPhoto;
 
 const styles = StyleSheet.create({
     container: {
@@ -86,12 +111,15 @@ const styles = StyleSheet.create({
     },
     flash: {
         flex: 0,
-        alignContent: 'flex-end',
-        backgroundColor: '#fff',
         borderRadius: 5,
-        padding: 15,
-        paddingHorizontal: 20,
+        padding: 5,
         alignSelf: 'center',
-        margin: 20,
+        position:"absolute",
+        top:20,
+        right:20
     },
+    flashlite:{
+        width:50, 
+        height:50, 
+    }
 });
