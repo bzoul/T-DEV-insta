@@ -30,6 +30,7 @@ export class AppareilPhoto extends React.Component<{},State>{
         }
         this.setState({ torchon: tstate })
     }
+    
     render() {
         const {torchon} =  this.state;
 
