@@ -1,5 +1,5 @@
-import React from 'react'
-import {Text, TextInput, View , StyleSheet } from 'react-native'
+import React from 'react';
+import {Text, TextInput, View , StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import RNPickerSelect from 'react-native-picker-select';

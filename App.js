@@ -4,17 +4,12 @@ import Login from './views/Login'
 import Register from "./views/Register"
 import ToolBar from './components/blocs/ToolBar'
 import {NavigationContainer} from '@react-navigation/native'
+import Photo from './components/blocs/PhotoBloc'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/*<Login/>*/}
-      {/*<Register/>*/}
-      <NavigationContainer>
-        <ToolBar>
-
-        </ToolBar>
-      </NavigationContainer>
+    <View >
+      <Photo></Photo>
     </View>
   );
 }
