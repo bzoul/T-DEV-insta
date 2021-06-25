@@ -8,9 +8,11 @@ import Photo from './components/blocs/PhotoBloc'
 
 export default function App() {
   return (
-    <View >
-      <Photo></Photo>
-    </View>
+    <NavigationContainer>
+        <ToolBar>
+
+        </ToolBar>
+      </NavigationContainer>
   );
 }
 
