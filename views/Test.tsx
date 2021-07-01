@@ -3,8 +3,14 @@ import {View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
 import {NativeModules} from 'react-native';
 
 var HelloWorld = NativeModules.HelloWorld;
+var RNImgToBase64 = NativeModules.RNImgToBase64;
 export default class Test extends React.Component {
     
+    async test(){
+        var truc = RNImgToBase64.getBase64String('https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png');
+        console.log(truc)
+    }
+
     async sayHiFromJava() {
         HelloWorld.sayHi( (err) => {console.log(err)}, (msg) => {console.log(msg)} );
     }
@@ -12,8 +18,11 @@ export default class Test extends React.Component {
     render() {
     return (
         <View style={styles.container}>
-        <TouchableOpacity onPress={ this.sayHiFromJava }>
+            <TouchableOpacity onPress={ this.sayHiFromJava }>
                 <Text>Invoke native Java code</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ this.test }>
+                <Text>test bitmap</Text>
             </TouchableOpacity>
         </View>
     );
