@@ -1,16 +1,31 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Login from './views/Login'
-import Register from "./views/Register"
-import ToolBar from './components/blocs/ToolBar'
-import {NavigationContainer} from '@react-navigation/native'
-import Photo from './components/blocs/PhotoBloc'
-import Test from "./views/Test"
+import Login from './views/Login';
+import Register from './views/Register';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-      <Test/>
+  <NavigationContainer >
+        <Stack.Navigator 
+          screenOptions={{
+            headerShown: false
+        }}>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+
   );
 }
 
