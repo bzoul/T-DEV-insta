@@ -10,9 +10,11 @@ import Test from "./views/Test"
 
 export default function App() {
   return (
-    <View >
-      <Test/>
-    </View>
+      </NavigationContainer>
+        </ToolBar>
+
+        <ToolBar>
+    <NavigationContainer>
   );
 }
 
