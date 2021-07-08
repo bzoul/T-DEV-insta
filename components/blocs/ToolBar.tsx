@@ -113,7 +113,7 @@ const Tabs = () => {
 
 const styles = StyleSheet.create({
     shadow: {
-        shadowColor: '#7F5DF0',
+        shadowColor: '#8fcbbc',
         shadowOffset: {
             width: 0,
             height: 10

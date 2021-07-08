@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet, FlatList, Dimensions, Text, ScrollView } from 'react-native';
 import ToolBar from '../components/blocs/ToolBar'
 import HeaderBlock from '../components/blocs/Header'
+import BottomBar from '../components/blocs/BottomBar'
 
 interface State { // Added this interface for props
 
@@ -34,6 +35,7 @@ export class Photos_Shared extends React.Component<{},State> {
 
     render() {
         return (
+            <>
             <ScrollView contentContainerStyle={{paddingBottom: 50}}>
                 <HeaderBlock />
                 <Text style={styles.title}>Photos partagées avec moi</Text>
@@ -48,6 +50,8 @@ export class Photos_Shared extends React.Component<{},State> {
                     </FlatList>
                 </View>
             </ScrollView>
+            <BottomBar/>
+            </>
         );
     }
 }

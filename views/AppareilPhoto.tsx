@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import BottomBar from '../components/blocs/BottomBar'
 
 interface State { // Added this interface for props
     torchon : RNCamera
@@ -82,6 +83,7 @@ export class AppareilPhoto extends React.Component<{},State>{
                         );
                     }}
                 </RNCamera>
+                <BottomBar/>
             </View >
         );
     }

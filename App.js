@@ -10,6 +10,7 @@ import Photo_Selected_Perso from './views/Photo_Selected_Perso';
 import Tabs from './components/blocs/ToolBar';
 import Photos_Shared from './views/Photos_Shared';
 import My_Photos from './views/My_Photos';
+import Photos from './views/Photos';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,7 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Albums" component={Albums} />
+        <Stack.Screen name="Photos" component={Photos} />
         <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>

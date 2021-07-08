@@ -3,6 +3,7 @@ import Header from 'native-base';
 import Body from 'native-base';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
+import BottomBar from '../components/blocs/BottomBar'
 
 let albums = require('../assets/albums.json');
 let { width: screenWidth } = Dimensions.get('window')
@@ -111,6 +112,7 @@ export class Albums extends React.Component<{}, State> {
                         ))}
                     </ScrollView>
                 </View>
+                <BottomBar/>
             </View>
         );
     }

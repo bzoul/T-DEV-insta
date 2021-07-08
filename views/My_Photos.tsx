@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, FlatList, Dimensions, Text, ScrollView } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
+import BottomBar from '../components/blocs/BottomBar'
 
 let pictures = require('../assets/pictures.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
@@ -25,6 +26,7 @@ export class My_Photos extends React.Component {
     }
     render() {
         return (
+            <>
                 <ScrollView contentContainerStyle={{paddingBottom: 50}}>
                     <HeaderBlock />
                     <Text style={styles.title}>Mes photos</Text>
@@ -39,6 +41,8 @@ export class My_Photos extends React.Component {
                         </FlatList>
                     </View>
                 </ScrollView>
+                <BottomBar/>
+                </>
         );
     }
 }

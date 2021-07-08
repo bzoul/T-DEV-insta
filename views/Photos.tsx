@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet, Dimensions, Text, ScrollView, TouchableOpacity } from 'react-native';
 import ToolBar from '../components/blocs/ToolBar'
 import HeaderBlock from '../components/blocs/Header'
+import BottomBar from '../components/blocs/BottomBar'
 
 let pictures = require('../assets/pictures.json');
 let { width: screenWidth } = Dimensions.get('window')
@@ -74,7 +75,7 @@ export class Photos extends React.Component<{}, State>{
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>
                 </View>
-
+                <BottomBar/>
             </View>
         );
     }
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     },
     photo_container_shared: {
         position: 'relative',
-        top: 110
+        top: 90
     },
     title: {
         position: 'relative',
