@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import {NativeModules} from 'react-native';
+
+var HelloWorld = NativeModules.HelloWorld;
+var RNImgToBase64 = NativeModules.RNImgToBase64;
 
 interface State { // Added this interface for props
     torchon : RNCamera
@@ -15,10 +19,12 @@ export class AppareilPhoto extends React.Component<{},State>{
     }
 
     async takePicture(camera) {
-        const options = { quality: 0.5, base64: true };
+        const options = { quality: 0.2, base64: false };
         const data = await camera.takePictureAsync(options);
         //  eslint-disable-next-line
-        console.log(data.uri);
+        console.log('present  ')
+        var truc =  await RNImgToBase64.getBase64String(data.uri);
+        console.log(truc);
     };
     
     async toggleTorch() {

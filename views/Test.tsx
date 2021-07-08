@@ -7,7 +7,7 @@ var RNImgToBase64 = NativeModules.RNImgToBase64;
 export default class Test extends React.Component {
     
     async test(){
-        var truc = RNImgToBase64.getBase64String('https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png');
+        var truc = RNImgToBase64.getBase64String();
         console.log(truc)
     }
 
