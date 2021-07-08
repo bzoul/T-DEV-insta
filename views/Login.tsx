@@ -26,10 +26,10 @@ export class LogIn extends React.Component<State>{
                     <Text style={styles.title}>Taking pictures is your talent, Saving them as they are is ours</Text>
                     <View style={styles.snd_container}>
                         <LogInput />
-                        <LogButton title="SIGN IN" backgroundColor="#ed1f5d" onPress={() => this.Login} />
+                        <LogButton title="SIGN IN" backgroundColor="#ed1f5d" Press={() => this.props.navigation.navigate("Albums")}/>
                         <View style={styles.register}>
                             <Text>First time with us?</Text>
-                            <LogButton title="SIGN UP" onPress={() => this.props.navigation.navigate("Register")}/>
+                            <LogButton title="SIGN UP" backgroundColor="" Press={() => this.props.navigation.navigate("Register")}/>
                         </View>
                     </View>
                 </ImageBackground>

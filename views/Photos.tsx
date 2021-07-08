@@ -56,7 +56,9 @@ export class Photos extends React.Component<{}, State>{
                             }} />
                         ))}
                     </ScrollView>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate("My_photos")}
+                    >
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>
                 </View>
@@ -71,7 +73,9 @@ export class Photos extends React.Component<{}, State>{
                             }} />
                         ))}
                     </ScrollView>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate("Photo_Shared")}
+                    >
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>
                 </View>
