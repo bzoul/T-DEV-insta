@@ -46,7 +46,7 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Image source={require('../../assets/photo_icon.png')}
+                            <Image source={require('../../assets/icons/photo_icon.png')}
                                 resizeMode='contain'
                                 style={{
                                     width: 30,
@@ -68,7 +68,7 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
-                            source={require('../../assets/appareilphoto_icon.png')}
+                            source={require('../../assets/icons/appareilphoto_icon.png')}
                             resizeMode='contain'
                             style={{
                                 width: 30,
@@ -87,7 +87,7 @@ const Tabs = () => {
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Image source={require('../../assets/album_icon.png')}
+                            <Image source={require('../../assets/icons/album_icon.png')}
                                 resizeMode='contain'
                                 style={{
                                     width: 30,

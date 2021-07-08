@@ -69,8 +69,8 @@ export class AppareilPhoto extends React.Component<{},State>{
                             <>
                                 <TouchableOpacity style={styles.flash} onPress={() => this.toggleTorch()}>
                                     {this.state.torchon == RNCamera.Constants.FlashMode.off?  
-                                    <Image style = {styles.flashlite} source = {require('../assets/flash_off_icon.png')}/> : 
-                                    <Image style = {styles.flashlite} source = {require('../assets/flash_on_icon.png')}/>}
+                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_off_icon.png')}/> : 
+                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_on_icon.png')}/>}
                                 </TouchableOpacity>
 
                                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
