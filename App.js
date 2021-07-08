@@ -7,7 +7,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Albums from './views/Albums';
 import Photo_Selected_Perso from './views/Photo_Selected_Perso';
-import ToolBar  from './components/blocs/ToolBar';
+import Tabs from './components/blocs/ToolBar';
 import Photos_Shared from './views/Photos_Shared';
 import My_Photos from './views/My_Photos';
 

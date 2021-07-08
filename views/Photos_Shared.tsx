@@ -21,7 +21,7 @@ export class Photos_Shared extends React.Component<{},State> {
 
         return (
 
-            <View style={{ alignItems: "baseline", paddingTop: 5, paddingRight:5 }}>
+            <View style={{ alignItems: "baseline", paddingTop: 10, paddingRight:10 }}>
                 <Image source={{ uri: item.item.path }} style={{
                     width: (screenWidth - 20) / 3,
                     height: (screenWidth - 20) / 3,
@@ -34,7 +34,7 @@ export class Photos_Shared extends React.Component<{},State> {
 
     render() {
         return (
-            <ScrollView>
+            <ScrollView contentContainerStyle={{paddingBottom: 50}}>
                 <HeaderBlock />
                 <Text style={styles.title}>Photos partagées avec moi</Text>
                 <View style={styles.photo_container}>

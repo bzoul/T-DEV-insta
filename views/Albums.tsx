@@ -41,24 +41,18 @@ export class Albums extends React.Component<{}, State> {
     UNSAFE_componentWillMount() {
         let myAlbums = [], sharedAlbums = []
         albums[0].map((album) => {
-            console.log("name")
-            console.log(album.name)
-            console.log("path first photo")
-            console.log(album.photos[0].path)
-            console.log("nombre de photo")
-            console.log(album.photos.length +1)
             let A = {
                 nom: album.name,
                 firstPhoto: album.photos[0].path,
-                numberOfPhoto: album.photos.length +1
+                numberOfPhoto: album.photos.length + 1
             }
             myAlbums.push(A)
         })
-        albums[1].map((album) => { 
+        albums[1].map((album) => {
             let A = {
                 nom: album.name,
                 firstPhoto: album.photos[0].path,
-                owner: album.photos.length +1
+                owner: album.owner
             }
             sharedAlbums.push(A)
         })
@@ -72,7 +66,7 @@ export class Albums extends React.Component<{}, State> {
     renderImages = item => {
         return (
             <Text>{item.item.owner}</Text>
-        ) 
+        )
     }
     render() {
         const { Shared_albums, My_albums } = this.state
@@ -82,12 +76,18 @@ export class Albums extends React.Component<{}, State> {
                 <View style={styles.photo_container}>
                     <Text style={styles.title}>Mes albums</Text>
 
-                    <ScrollView horizontal>
+                    <ScrollView horizontal >
                         {My_albums.map((album) => (
+                            <View>
                             <Image source={{ uri: album.firstPhoto }} style={{
-                                height: (screenWidth-20) / 3,
-                                width: (screenWidth-20) / 3,
+                                height: (screenWidth - 20) / 3,
+                                width: (screenWidth - 20) / 3,
+                                borderRadius : 25,
+                                borderColor: 'black',
                             }} />
+                            <Text style={{fontSize:12, left: 10}}>{album.nom}</Text>
+                            <Text style={{fontSize:10, left: 10}}>{album.numberOfPhoto} éléments</Text>
+                            </View>
                         ))}
                     </ScrollView>
                 </View>
@@ -97,10 +97,17 @@ export class Albums extends React.Component<{}, State> {
 
                     <ScrollView horizontal>
                         {Shared_albums.map((album) => (
-                            <Image source={{ uri: album.firstPhoto }} style={{
+                            <View>
+                                <Image source={{ uri: album.firstPhoto }} style={{
                                 height: screenWidth / 3,
                                 width: screenWidth / 3,
+                                borderRadius : 25,
+                                borderColor: 'black',
                             }} />
+                            <Text style={{fontSize:12, left: 10}}>{album.nom}</Text>
+                            <Text style={{fontSize:10, left: 10}}>{album.owner}</Text>
+                            </View>
+                            
                         ))}
                     </ScrollView>
                 </View>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, FlatList, Dimensions, Text,ScrollView } from 'react-native';
-import ToolBar from '../components/blocs/ToolBar'
+import { View, Image, StyleSheet, FlatList, Dimensions, Text, ScrollView } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
 
 let pictures = require('../assets/pictures.json');
@@ -16,34 +15,34 @@ export class My_Photos extends React.Component {
 
     renderImages = item => {
         return (
-            <View style={{ alignItems: "baseline", paddingTop: 5 , paddingRight : 5}}>
+            <View style={{ alignItems: "baseline", paddingTop: 10, paddingRight: 10 }}>
                 <Image source={{ uri: item.item.path }} style={{
-                    height: (screenWidth-20) / 3,
-                    width: (screenWidth-20) / 3,
+                    height: (screenWidth - 20) / 3,
+                    width: (screenWidth - 20) / 3,
                 }} />
             </View>
         )
     }
     render() {
         return (
-            <ScrollView>
-                <HeaderBlock />
-                <Text style={styles.title}>Mes photos</Text>
-                <View style={styles.photo_container}>
-                    <FlatList
-                        horizontal={false}
-                        numColumns={3}
-                        data={pictures[0]}
-                        renderItem={this.renderImages}
-                        keyExtractor={(item, index) => index.toString()}
-                    >
-                    </FlatList>
-                </View>
-            </ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 50}}>
+                    <HeaderBlock />
+                    <Text style={styles.title}>Mes photos</Text>
+                    <View style={styles.photo_container}>
+                        <FlatList
+                            horizontal={false}
+                            numColumns={3}
+                            data={pictures[0]}
+                            renderItem={this.renderImages}
+                            keyExtractor={(item, index) => index.toString()}
+                        >
+                        </FlatList>
+                    </View>
+                </ScrollView>
         );
     }
 }
-        export default My_Photos;
+export default My_Photos;
 
 const styles = StyleSheet.create({
     container: {
@@ -52,28 +51,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#8fcbbc'
     },
-    photo_container:{
+    photo_container: {
         position: 'relative',
         top: 55,
         height: ScreenHeight
     },
-    photo_container_shared:{
-        position: 'relative',
-        top: 140
-    },
-    title:{
+    title: {
         position: 'relative',
         top: 20,
-        left:20,
-        fontSize : 16
+        left: 20,
+        fontSize: 16
     },
-    title2:{
+    title2: {
         position: 'relative',
         top: 100,
-        left:20,
-        fontSize : 16
+        left: 20,
+        fontSize: 16
     },
-    button_more:{
+    button_more: {
 
     }
 
