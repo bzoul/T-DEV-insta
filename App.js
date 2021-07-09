@@ -59,7 +59,7 @@ export default function App() {
           component={My_Photos} 
         />
           <Stack.Screen 
-          name="Photo" 
+          name="Photos" 
           component={Photos} 
         />
         <Stack.Screen 

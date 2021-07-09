@@ -41,7 +41,7 @@ export class My_Photos extends React.Component {
                         </FlatList>
                     </View>
                 </ScrollView>
-                <BottomBar/>
+                <BottomBar navigation={this.props.navigation}/>
                 </>
         );
     }

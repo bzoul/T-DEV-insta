@@ -11,7 +11,10 @@ interface State { // Added this interface for props
     My_photo: []
     Shared_photo: []
 }
-export class Photos extends React.Component<{}, State>{
+interface Props {
+    navigation: any
+  }
+export class Photos extends React.Component<{}, State, Props>{
     constructor(props) {
         super(props);
         this.state = {
@@ -79,7 +82,7 @@ export class Photos extends React.Component<{}, State>{
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>
                 </View>
-                <BottomBar/>
+                <BottomBar navigation={this.props.navigation}/>
             </View>
         );
     }

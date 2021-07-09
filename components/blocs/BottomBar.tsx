@@ -9,7 +9,7 @@ const BottomBar = ({navigation}) => {
     return (
         <View>
             <View style={styles.barre}>
-                <TouchableOpacity onPress={() => navigation.navigate('My_photos')}
+                <TouchableOpacity onPress={() => navigation.navigate('Photos')}
                     style={styles.Photos}
                 >
                     <Image source={require('../../assets/icons/photo_icon.png')}
