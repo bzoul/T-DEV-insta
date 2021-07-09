@@ -4,6 +4,9 @@ import Body from 'native-base';
 import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
 import BottomBar from '../components/blocs/BottomBar'
+interface Props {
+    navigation: any
+  }
 
 let albums = require('../assets/albums.json');
 let { width: screenWidth } = Dimensions.get('window')
@@ -22,7 +25,7 @@ interface State { // Added this interface for props
 }
 
 
-export class Albums extends React.Component<{}, State> {
+export class Albums extends React.Component<{}, State, Props> {
     constructor(props) {
         super(props);
         this.state = {
@@ -112,7 +115,7 @@ export class Albums extends React.Component<{}, State> {
                         ))}
                     </ScrollView>
                 </View>
-                <BottomBar/>
+                <BottomBar navigation={this.props.navigation}/>
             </View>
         );
     }

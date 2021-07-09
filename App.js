@@ -14,9 +14,6 @@ import Photo_Selected_Shared from './views/Photo_Selected_Shared';
 import Photos from './views/Photos';
 import Test from './views/Test';
 import Tabs from './components/blocs/ToolBar';
-import Photos_Shared from './views/Photos_Shared';
-import My_Photos from './views/My_Photos';
-import Photos from './views/Photos';
 
 const Stack = createStackNavigator();
 
@@ -27,17 +24,14 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}>
-          <Stack.Screen 
-          name="Photo" 
-          component={Photos} 
-        />
+          
         <Stack.Screen 
           name="Login" 
           component={Login} 
         />
         <Stack.Screen 
           name="Albums" 
-          component={Albums} 
+          component={Albums}
         />
         <Stack.Screen 
           name="Register" 
@@ -47,10 +41,7 @@ export default function App() {
           name="AppareilPhoto" 
           component={AppareilPhoto} 
         />
-        <Stack.Screen 
-          name="My_photos" 
-          component={My_Photos} 
-        />
+        
         <Stack.Screen 
           name="Photo_Selected_Perso" 
           component={Photo_Selected_Perso} 
@@ -63,7 +54,14 @@ export default function App() {
           name="Photo_Selected_Shared" 
           component={Photo_Selected_Shared} 
         />
-        
+        <Stack.Screen 
+          name="My_photos" 
+          component={My_Photos} 
+        />
+          <Stack.Screen 
+          name="Photo" 
+          component={Photos} 
+        />
         <Stack.Screen 
           name="Test" 
           component={Test} 
