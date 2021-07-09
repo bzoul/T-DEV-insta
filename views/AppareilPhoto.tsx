@@ -6,8 +6,11 @@ import BottomBar from '../components/blocs/BottomBar'
 interface State { // Added this interface for props
     torchon : RNCamera
   }
+interface Props {
+    navigation: any
+}
 
-export class AppareilPhoto extends React.Component<{},State>{
+export class AppareilPhoto extends React.Component<{},State, Props>{
     constructor(props:State) {
         super(props);
         this.state = {
@@ -83,7 +86,7 @@ export class AppareilPhoto extends React.Component<{},State>{
                         );
                     }}
                 </RNCamera>
-                <BottomBar/>
+                <BottomBar navigation={this.props.navigation}/>
             </View >
         );
     }
