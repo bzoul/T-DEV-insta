@@ -19,6 +19,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 
 public class RNImgToBase64Module extends ReactContextBaseJavaModule {
+    static int compress = 10;
 
     private final ReactApplicationContext reactContext;
 
@@ -54,10 +55,10 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
                 int bitmapHeight = image.getHeight()-1;
                 int bitmapNewWidth = 0;
                 int bitmapNewHeight = 0;
-                newImage = Bitmap.createBitmap(image.getWidth()/2, image.getHeight()/2, Bitmap.Config.ARGB_4444);
-                for (int width = 0; width <= bitmapWidth; width+=2) {
+                newImage = Bitmap.createBitmap(image.getWidth()/compress, image.getHeight()/compress, Bitmap.Config.ARGB_4444);
+                for (int width = 0; width <= bitmapWidth; width+=compress) {
                     bitmapNewHeight=0;
-                    for (int height = 0; height <= bitmapHeight; height+=2) {
+                    for (int height = 0; height <= bitmapHeight; height+=compress) {
                         moyRed = Red(width, height, image, bitmapHeight, bitmapWidth);
                         moyGreen = Green(width, height, image, bitmapHeight, bitmapWidth);
                         moyBlue = Blue(width, height, image, bitmapHeight, bitmapWidth);
@@ -82,8 +83,8 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
     public static int Red (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
         int moy =0 ;
-        for (int x=0; x<2; x++) {
-            for (int i=0; i<2; i++) {
+        for (int x=0; x<compress; x++) {
+            for (int i=0; i<compress; i++) {
                 if (height + i <= maxHeight && width + x <= maxWidth) {
                     moy += Color.red(image.getPixel(width + x, height + i));
                     divise++;
@@ -97,8 +98,8 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
     public static int Green (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
         int moy=0 ;
-        for (int x=0; x<2; x++) {
-            for (int i = 0; i < 2; i++) {
+        for (int x=0; x<compress; x++) {
+            for (int i = 0; i < compress; i++) {
                 if (height + i <= maxHeight && width + x <= maxWidth) {
                     moy += Color.green(image.getPixel(width+x, height + i));
                     divise++;
@@ -112,8 +113,8 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
     public static int Blue (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
         int moy = 0;
-        for (int x=0; x<2; x++) {
-            for (int i=0; i<2; i++) {
+        for (int x=0; x<compress; x++) {
+            for (int i=0; i<compress; i++) {
                 if (height + i <= maxHeight && width + x <= maxWidth) {
                     moy += Color.blue(image.getPixel(width + x, height + i));
                     divise++;
