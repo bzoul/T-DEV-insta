@@ -6,6 +6,7 @@ import Photo from './views/AppareilPhoto'
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Test from './views/Test';
 
 const Stack = createStackNavigator();
 
@@ -20,13 +21,14 @@ export default function App() {
             name="Photo"
             component={Photo}
           />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-          />
+          
           <Stack.Screen
             name="Register"
             component={Register}
+          />
+          <Stack.Screen
+            name="Test"
+            component={Test}
           />
         </Stack.Navigator>
       </NavigationContainer>

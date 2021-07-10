@@ -39,38 +39,35 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
         int moyRed = 0;
         int moyBlue = 0;
         int moyGreen = 0;
-        int moyAlpha = 0;
-
+        int alpha=255;
         try {
             if (uri.contains("http")) {
                 image = getBitmapFromURL(uri);
             } else {
                 image = MediaStore.Images.Media.getBitmap(reactContext.getContentResolver(), Uri.parse(uri));
+
             }
             if (image == null) {
                 promise.reject("Error", "Failed to decode Bitmap, uri: " + uri);
             } else {
-                newImage = image.copy(image.getConfig(), true);
                 int bitmapWidth = image.getWidth()-1;
                 int bitmapHeight = image.getHeight()-1;
-                for (int width = 0; width <= bitmapWidth; width++) {
-                    for (int height = 0; height <= bitmapHeight; height+=3) {
-                        moyAlpha = Alpha(width, height, image, bitmapHeight);
-                        moyRed = Red(width, height, image, bitmapHeight);
-                        moyGreen = Green(width, height, image, bitmapHeight);
-                        moyBlue = Blue(width, height, image, bitmapHeight);
-
-                        newImage.setPixel(width, height, Color.argb( moyAlpha, moyRed, moyGreen, moyBlue));
-                        if (height + 1 <= bitmapHeight ) {
-                            newImage.setPixel(width, height + 1, Color.argb( moyAlpha, moyRed, moyGreen, moyBlue));
+                int bitmapNewWidth = 0;
+                int bitmapNewHeight = 0;
+                newImage = Bitmap.createBitmap(image.getWidth()/2, image.getHeight()/2, Bitmap.Config.ARGB_4444);
+                for (int width = 0; width <= bitmapWidth; width+=2) {
+                    bitmapNewHeight=0;
+                    for (int height = 0; height <= bitmapHeight; height+=2) {
+                        moyRed = Red(width, height, image, bitmapHeight, bitmapWidth);
+                        moyGreen = Green(width, height, image, bitmapHeight, bitmapWidth);
+                        moyBlue = Blue(width, height, image, bitmapHeight, bitmapWidth);
+                        if (bitmapNewWidth < newImage.getWidth() && bitmapNewHeight < newImage.getHeight()) {
+                            newImage.setPixel(bitmapNewWidth, bitmapNewHeight, Color.argb(alpha, moyRed, moyGreen, moyBlue));
                         }
-                        if (height + 2 <= bitmapHeight ) {
-                            newImage.setPixel(width, height + 2, Color.argb( moyAlpha, moyRed, moyGreen, moyBlue));
-                        }
+                        bitmapNewHeight++;
                     }
+                    bitmapNewWidth++;
                 }
-                //int[] intArray = new int[image.getWidth()*image.getHeight()];
-                //image.getPixels(intArray,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());
                 promise.resolve(bitmapToPNG(newImage));
             }
         } catch (Error e) {
@@ -82,68 +79,50 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
         }
     }
 
-    public static int Alpha (int width, int height, Bitmap image, int maxHeight){
+    public static int Red (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
-        int moy = Color.alpha(image.getPixel(width,height));
-        if (height + 1 <= maxHeight ) {
-            moy += Color.alpha(image.getPixel(width,height + 1));
-            divise++;
-        }
-        if (height + 2 <= maxHeight ) {
-            moy += Color.alpha(image.getPixel(width,height + 2));
-            divise++;
+        int moy =0 ;
+        for (int x=0; x<2; x++) {
+            for (int i=0; i<2; i++) {
+                if (height + i <= maxHeight && width + x <= maxWidth) {
+                    moy += Color.red(image.getPixel(width + x, height + i));
+                    divise++;
+                }
+            }
         }
         moy = moy/divise;
         return  moy;
     }
 
-    public static int Red (int width, int height, Bitmap image, int maxHeight){
+    public static int Green (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
-        int moy = Color.red(image.getPixel(width,height));
-        if (height + 1 <= maxHeight ) {
-            moy += Color.red(image.getPixel(width,height + 1));
-            divise++;
-        }
-        if (height + 2 <= maxHeight ) {
-            moy += Color.red(image.getPixel(width,height + 2));
-            divise++;
+        int moy=0 ;
+        for (int x=0; x<2; x++) {
+            for (int i = 0; i < 2; i++) {
+                if (height + i <= maxHeight && width + x <= maxWidth) {
+                    moy += Color.green(image.getPixel(width+x, height + i));
+                    divise++;
+                }
+            }
         }
         moy = moy/divise;
         return  moy;
     }
 
-    public static int Green (int width, int height, Bitmap image, int maxHeight){
+    public static int Blue (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
-        int moy = Color.green(image.getPixel(width,height));
-        if (height + 1 <= maxHeight ) {
-            moy += Color.green(image.getPixel(width,height + 1));
-            divise++;
-        }
-        if (height + 2 <= maxHeight ) {
-            moy += Color.green(image.getPixel(width,height + 2));
-            divise++;
+        int moy = 0;
+        for (int x=0; x<2; x++) {
+            for (int i=0; i<2; i++) {
+                if (height + i <= maxHeight && width + x <= maxWidth) {
+                    moy += Color.blue(image.getPixel(width + x, height + i));
+                    divise++;
+                }
+            }
         }
         moy = moy/divise;
         return  moy;
     }
-
-    public static int Blue (int width, int height, Bitmap image, int maxHeight){
-        int divise = 1;
-        int moy = Color.blue(image.getPixel(width,height));
-        if (height + 1 <= maxHeight ) {
-            moy += Color.blue(image.getPixel(width,height + 1));
-            divise++;
-        }
-        if (height + 2 <= maxHeight ) {
-            moy += Color.blue(image.getPixel(width,height + 2));
-            divise++;
-        }
-        moy = moy/divise;
-        return  moy;
-    }
-
-
-
 
 
     public Bitmap getBitmapFromURL(String src) {
@@ -163,7 +142,7 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
 
     private String bitmapToPNG(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }

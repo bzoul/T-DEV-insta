@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RNCamera } from 'react-native-camera';
 import {NativeModules} from 'react-native';
-
+import RNFetchBlob from 'rn-fetch-blob';
+global.test= 'truc';
+global.origin = 'null';
 var HelloWorld = NativeModules.HelloWorld;
 var RNImgToBase64 = NativeModules.RNImgToBase64;
 
@@ -10,7 +13,7 @@ interface State { // Added this interface for props
     torchon : RNCamera
   }
 
-export class AppareilPhoto extends React.Component<{},State>{
+export class AppareilPhoto extends React.Component<{},State>{   
     constructor(props:State) {
         super(props);
         this.state = {
@@ -18,14 +21,40 @@ export class AppareilPhoto extends React.Component<{},State>{
         };
     }
 
+    storeBase64Picture = async (value) => {
+        try {
+          await AsyncStorage.setItem('Photo', value)
+        //   console.log(this.state.token);
+        } catch (e) {
+            console.log('store '+e);
+        }
+    }
+
     async takePicture(camera) {
-        const options = { quality: 0.2, base64: false };
+        const options = { quality: 1, base64: false };
         const data = await camera.takePictureAsync(options);
         //  eslint-disable-next-line
         console.log('present  ')
-        var truc =  await RNImgToBase64.getBase64String(data.uri);
-        console.log(truc);
+        var photo =  await RNImgToBase64.getBase64String(data.uri);
+        // console.log(photo);
+        global.origin = data.uri;
+        global.test = photo;
+        this.saveBase64Image(photo);
     };
+
+    saveBase64Image(base64){
+        const dirs = RNFetchBlob.fs.dirs
+        const file_path = dirs.DocumentDir + "/base64.jpg"
+        RNFetchBlob.fs.unlink(file_path);
+        RNFetchBlob.fs.createFile(file_path, base64, 'base64')
+            .then((res)=>{
+                console.log('test save '+res);
+                console.log('save');
+            })
+            .catch((error) => {
+                console.log("fetch blob "+error);
+            });
+    }
     
     async toggleTorch() {
         let tstate = this.state.torchon;
@@ -83,7 +112,11 @@ export class AppareilPhoto extends React.Component<{},State>{
                                     <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
                                         <Text style={{ fontSize: 15 }}> SNAP </Text>
                                     </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Test')} style={styles.capture}>
+                                        <Text style={{ fontSize: 15 }}> test </Text>
+                                    </TouchableOpacity>
                                 </View>
+                                
                             </>
                         );
                     }}
