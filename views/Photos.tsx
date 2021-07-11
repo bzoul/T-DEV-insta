@@ -60,7 +60,7 @@ export class Photos extends React.Component<{}, State, Props>{
                         ))}
                     </ScrollView>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("My_photos")}
+                        onPress={() => this.props.navigation.navigate("My_Photos")}
                     >
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>

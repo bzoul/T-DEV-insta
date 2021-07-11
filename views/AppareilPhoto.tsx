@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } 
 import { RNCamera } from 'react-native-camera';
 import BottomBar from '../components/blocs/BottomBar'
 import RNFetchBlob from 'rn-fetch-blob';
+import {NativeModules} from 'react-native';
 global.test= 'truc';
 global.origin = 'null';
 var RNImgToBase64 = NativeModules.RNImgToBase64;
@@ -11,6 +12,7 @@ var RNImgToBase64 = NativeModules.RNImgToBase64;
 interface State { // Added this interface for props
     torchon : RNCamera
   }
+  
 interface Props {
     navigation: any
 }

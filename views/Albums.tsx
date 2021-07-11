@@ -1,40 +1,46 @@
 import React from 'react';
-import Header from 'native-base';
-import Body from 'native-base';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, TouchableOpacity } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
 import BottomBar from '../components/blocs/BottomBar'
-interface Props {
-    navigation: any
-  }
+import { NavigationInjectedProps, withNavigation } from 'react-navigation'
+
 
 let albums = require('../assets/albums.json');
 let { width: screenWidth } = Dimensions.get('window')
 
+interface Props extends NavigationInjectedProps {
+    id_album: number,
+    index_album_type: number
+}
+
 interface State { // Added this interface for props
     My_albums: [{
-        nom: ""
-        firstPhoto: ""
-        numberOfPhoto: ""
+        id: number
+        nom: string
+        firstPhoto: string
+        numberOfPhoto: number
     }]
     Shared_albums: [{
-        nom: ""
-        firstPhoto: ""
-        owner: ""
+        id: number
+        nom: string
+        firstPhoto: string
+        owner: string
     }]
 }
 
 
-export class Albums extends React.Component<{}, State, Props> {
+class Albums extends React.Component<{}, State, Props> {
     constructor(props) {
         super(props);
         this.state = {
             My_albums: [{
+                id: 0,
                 nom: "",
                 firstPhoto: "",
-                numberOfPhoto: ""
+                numberOfPhoto: 0
             }],
             Shared_albums: [{
+                id: 0,
                 nom: "",
                 firstPhoto: "",
                 owner: ""
@@ -46,6 +52,7 @@ export class Albums extends React.Component<{}, State, Props> {
         let myAlbums = [], sharedAlbums = []
         albums[0].map((album) => {
             let A = {
+                id:album.id,
                 nom: album.name,
                 firstPhoto: album.photos[0].path,
                 numberOfPhoto: album.photos.length + 1
@@ -54,6 +61,7 @@ export class Albums extends React.Component<{}, State, Props> {
         })
         albums[1].map((album) => {
             let A = {
+                id: album.id,
                 nom: album.name,
                 firstPhoto: album.photos[0].path,
                 owner: album.owner
@@ -83,14 +91,21 @@ export class Albums extends React.Component<{}, State, Props> {
                     <ScrollView horizontal >
                         {My_albums.map((album) => (
                             <View>
-                            <Image source={{ uri: album.firstPhoto }} style={{
-                                height: (screenWidth - 20) / 3,
-                                width: (screenWidth - 20) / 3,
-                                borderRadius : 25,
-                                borderColor: 'black',
-                            }} />
-                            <Text style={{fontSize:12, left: 10}}>{album.nom}</Text>
-                            <Text style={{fontSize:10, left: 10}}>{album.numberOfPhoto} éléments</Text>
+                                <TouchableOpacity onPress={()=> this.props.navigation.navigate('Album', {
+                                    id_album : album.id,
+                                    index_album_type : 0,
+                                    name_album : album.nom
+                                })}>
+                                    <Image source={{ uri: album.firstPhoto }} style={{
+                                        height: (screenWidth - 20) / 3,
+                                        width: (screenWidth - 20) / 3,
+                                        borderRadius: 25, 
+                                        borderColor: 'black',
+                                    }} />
+                                </TouchableOpacity>
+
+                                <Text style={{ fontSize: 12, left: 10 }}>{album.nom}</Text>
+                                <Text style={{ fontSize: 10, left: 10 }}>{album.numberOfPhoto} éléments</Text>
                             </View>
                         ))}
                     </ScrollView>
@@ -102,27 +117,34 @@ export class Albums extends React.Component<{}, State, Props> {
                     <ScrollView horizontal>
                         {Shared_albums.map((album) => (
                             <View>
-                                <Image source={{ uri: album.firstPhoto }} style={{
-                                height: screenWidth / 3,
-                                width: screenWidth / 3,
-                                borderRadius : 25,
-                                borderColor: 'black',
-                            }} />
-                            <Text style={{fontSize:12, left: 10}}>{album.nom}</Text>
-                            <Text style={{fontSize:10, left: 10}}>{album.owner}</Text>
+                                <TouchableOpacity onPress={()=> this.props.navigation.navigate('Album', {
+                                    id_album : album.id,
+                                    index_album_type : 1,
+                                    name_album : album.nom
+                                })}>
+                                    <Image source={{ uri: album.firstPhoto }} style={{
+                                        height: screenWidth / 3,
+                                        width: screenWidth / 3,
+                                        borderRadius: 25,
+                                        borderColor: 'black',
+                                    }} />
+                                </TouchableOpacity>
+
+                                <Text style={{ fontSize: 12, left: 10 }}>{album.nom}</Text>
+                                <Text style={{ fontSize: 10, left: 10 }}>{album.owner}</Text>
                             </View>
-                            
+
                         ))}
                     </ScrollView>
                 </View>
-                <BottomBar navigation={this.props.navigation}/>
+                <BottomBar navigation={this.props.navigation} />
             </View>
         );
     }
 
 }
 
-export default Albums;
+export default withNavigation(Albums);
 
 const styles = StyleSheet.create({
     container: {

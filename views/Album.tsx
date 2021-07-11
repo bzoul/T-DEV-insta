@@ -1,60 +1,76 @@
 import React from 'react';
-import { View, Image, StyleSheet, FlatList, Dimensions, Text, ScrollView } from 'react-native';
+import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
-import BottomBar from '../components/blocs/BottomBar'
+import {  NavigationParams, withNavigation, NavigationInjectedProps } from 'react-navigation'
 
 
-let pictures = require('../assets/pictures.json');
+let albums = require('../assets/albums.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
 
-export class Album extends React.Component {
-    static navigationOption = ({ navigation }) => {
-        return {
-            title: navigation.getParam('id_album', null)
-        }
-    }
-    constructor(props) { 
+interface PropsInject extends NavigationInjectedProps{
+    id_photo :string
+}
+
+interface Props extends NavigationParams {
+    
+}
+
+class Album extends React.Component<Props, PropsInject> {
+    constructor(props) {
         super(props);
-        this.state = {
-            id_album : props.route.params.id_album,
-        }
     }
 
     renderImages = item => {
+        var type_album =""
+        if(this.props.route.params.index_album_type === 0){
+            type_album = "Photo_Selected_Perso"
+        }
+        else{
+            type_album = "Photo_Selected_Shared"
+        }
+        console.log(type_album)
         return (
             <View style={{ alignItems: "baseline", paddingTop: 10, paddingRight: 10 }}>
-                <Image source={{ uri: item.item.path }} style={{
-                    height: (screenWidth - 20) / 3,
-                    width: (screenWidth - 20) / 3,
-                }} />
+                <TouchableOpacity onPress={()=> this.props.navigation.navigate({ name: type_album}, 
+                    {id_photo : item.item.id})}>
+                    <Image source={{ uri: item.item.path }} style={{
+                        height: (screenWidth - 20) / 3,
+                        width: (screenWidth - 20) / 3,
+                    }} />
+                </TouchableOpacity>
+
             </View>
         )
     }
     render() {
-        const id_album = this.state
-        console.log(id_album)
+        const id_album = this.props.route.params.id_album
+        const index_album_type = this.props.route.params.index_album_type
+        const name_album = this.props.route.params.name_album
+
         return (
             <>
-                <ScrollView contentContainerStyle={{paddingBottom: 50}}>
-                    <HeaderBlock />
-                    <Text style={styles.title}>Mes photos</Text>
-                    <View style={styles.photo_container}>
-                        <FlatList
-                            horizontal={false} 
-                            numColumns={3}
-                            data={pictures[1][1]}
-                            renderItem={this.renderImages}
-                            keyExtractor={(item, index) => index.toString()}
-                        >
-                        </FlatList>
-                    </View>
-                </ScrollView>
-                <BottomBar navigation={this.props.navigation}/>
-                </>
+                <HeaderBlock />
+                <Text style={styles.title}>{name_album}</Text>
+                <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate('Albums')}>
+                    <Image
+                        source={require('../assets/icons/backward_icon.png')}
+                        style={styles.image_backward} />
+                </TouchableOpacity>
+                <View style={styles.photo_container}>
+                    <FlatList
+                        horizontal={false}
+                        numColumns={3}
+                        data={albums[index_album_type][id_album].photos}
+                        renderItem={this.renderImages}
+                        keyExtractor={(item, index) => index.toString()}
+                    >
+                    </FlatList>
+                </View>
+            </>
         );
     }
 }
-export default Album;
+export default withNavigation(Album);
 
 const styles = StyleSheet.create({
     container: {
@@ -80,8 +96,14 @@ const styles = StyleSheet.create({
         left: 20,
         fontSize: 16
     },
-    button_more: {
-
-    }
+    backward: {
+        position: 'absolute',
+        right: 30,
+        top: 140,
+    },
+    image_backward: {
+        height: 40,
+        width: 40
+    },
 
 });
