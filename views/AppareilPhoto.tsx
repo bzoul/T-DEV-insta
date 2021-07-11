@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } 
 import { RNCamera } from 'react-native-camera';
 import BottomBar from '../components/blocs/BottomBar'
 import RNFetchBlob from 'rn-fetch-blob';
+import {NativeModules} from 'react-native';
 global.test= 'truc';
 global.origin = 'null';
 var RNImgToBase64 = NativeModules.RNImgToBase64;
@@ -35,19 +36,18 @@ export class AppareilPhoto extends React.Component<{},State, Props>{
                 console.log("fetch blob "+error);
             });
     }
-    storeBase64Picture = async (value) => {
-        try {
-          await AsyncStorage.setItem('Photo', value)
-        //   console.log(this.state.token);
-        } catch (e) {
-            console.log('store '+e);
-        }
-    }
+
     async takePicture(camera) {
         const options = { quality: 0.5, base64: true };
         const data = await camera.takePictureAsync(options);
-        //  eslint-disable-next-line
-        console.log(data.uri);
+        console.log('present  ')
+        var photo =  await RNImgToBase64.getBase64String(data.uri);
+        // console.log(photo);
+        global.origin = data.uri;
+        global.test = photo;
+        this.saveBase64Image(photo);
+        this.props.navigation.navigate('Test');
+
     };
     
     async toggleTorch() {
