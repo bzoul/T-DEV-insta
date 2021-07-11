@@ -1,7 +1,12 @@
+
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import BottomBar from '../components/blocs/BottomBar'
+import RNFetchBlob from 'rn-fetch-blob';
+global.test= 'truc';
+global.origin = 'null';
+var RNImgToBase64 = NativeModules.RNImgToBase64;
 
 interface State { // Added this interface for props
     torchon : RNCamera
@@ -17,7 +22,27 @@ export class AppareilPhoto extends React.Component<{},State, Props>{
             torchon : RNCamera.Constants.FlashMode.off
         };
     }
-
+    saveBase64Image(base64){
+        const dirs = RNFetchBlob.fs.dirs
+        const file_path = dirs.DocumentDir + "/base64.jpg"
+        RNFetchBlob.fs.unlink(file_path);
+        RNFetchBlob.fs.createFile(file_path, base64, 'base64')
+            .then((res)=>{
+                console.log('test save '+res);
+                console.log('save');
+            })
+            .catch((error) => {
+                console.log("fetch blob "+error);
+            });
+    }
+    storeBase64Picture = async (value) => {
+        try {
+          await AsyncStorage.setItem('Photo', value)
+        //   console.log(this.state.token);
+        } catch (e) {
+            console.log('store '+e);
+        }
+    }
     async takePicture(camera) {
         const options = { quality: 0.5, base64: true };
         const data = await camera.takePictureAsync(options);
@@ -128,4 +153,5 @@ const styles = StyleSheet.create({
         width:50, 
         height:50, 
     }
+
 });
