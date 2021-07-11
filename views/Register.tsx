@@ -26,7 +26,7 @@ export class Register extends React.Component<State>{
                 <ImageBackground source={image} style={styles.image}>
                     <View style={styles.snd_container}>
                         <MyInformation />
-                        <LogButton title="REGISTER" backgroundColor="#ed1f5d" />
+                        <LogButton title="REGISTER" backgroundColor="#ed1f5d" Press={() => this.props.navigation.navigate("Login")}/>
                     </View>
                 </ImageBackground>
                 <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate("Login")}>

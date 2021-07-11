@@ -1,47 +1,27 @@
+
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RNCamera } from 'react-native-camera';
-import {NativeModules} from 'react-native';
+import BottomBar from '../components/blocs/BottomBar'
 import RNFetchBlob from 'rn-fetch-blob';
 global.test= 'truc';
 global.origin = 'null';
-var HelloWorld = NativeModules.HelloWorld;
 var RNImgToBase64 = NativeModules.RNImgToBase64;
 
 interface State { // Added this interface for props
     torchon : RNCamera
   }
+interface Props {
+    navigation: any
+}
 
-export class AppareilPhoto extends React.Component<{},State>{   
+export class AppareilPhoto extends React.Component<{},State, Props>{
     constructor(props:State) {
         super(props);
         this.state = {
             torchon : RNCamera.Constants.FlashMode.off
         };
     }
-
-    storeBase64Picture = async (value) => {
-        try {
-          await AsyncStorage.setItem('Photo', value)
-        //   console.log(this.state.token);
-        } catch (e) {
-            console.log('store '+e);
-        }
-    }
-
-    async takePicture(camera) {
-        const options = { quality: 1, base64: false };
-        const data = await camera.takePictureAsync(options);
-        //  eslint-disable-next-line
-        console.log('present  ')
-        var photo =  await RNImgToBase64.getBase64String(data.uri);
-        // console.log(photo);
-        global.origin = data.uri;
-        global.test = photo;
-        this.saveBase64Image(photo);
-    };
-
     saveBase64Image(base64){
         const dirs = RNFetchBlob.fs.dirs
         const file_path = dirs.DocumentDir + "/base64.jpg"
@@ -55,6 +35,20 @@ export class AppareilPhoto extends React.Component<{},State>{
                 console.log("fetch blob "+error);
             });
     }
+    storeBase64Picture = async (value) => {
+        try {
+          await AsyncStorage.setItem('Photo', value)
+        //   console.log(this.state.token);
+        } catch (e) {
+            console.log('store '+e);
+        }
+    }
+    async takePicture(camera) {
+        const options = { quality: 0.5, base64: true };
+        const data = await camera.takePictureAsync(options);
+        //  eslint-disable-next-line
+        console.log(data.uri);
+    };
     
     async toggleTorch() {
         let tstate = this.state.torchon;
@@ -104,23 +98,20 @@ export class AppareilPhoto extends React.Component<{},State>{
                             <>
                                 <TouchableOpacity style={styles.flash} onPress={() => this.toggleTorch()}>
                                     {this.state.torchon == RNCamera.Constants.FlashMode.off?  
-                                    <Image style = {styles.flashlite} source = {require('../assets/flash_off_icon.png')}/> : 
-                                    <Image style = {styles.flashlite} source = {require('../assets/flash_on_icon.png')}/>}
+                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_off_icon.png')}/> : 
+                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_on_icon.png')}/>}
                                 </TouchableOpacity>
 
                                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
                                     <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
                                         <Text style={{ fontSize: 15 }}> SNAP </Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Test')} style={styles.capture}>
-                                        <Text style={{ fontSize: 15 }}> test </Text>
-                                    </TouchableOpacity>
                                 </View>
-                                
                             </>
                         );
                     }}
                 </RNCamera>
+                <BottomBar navigation={this.props.navigation}/>
             </View >
         );
     }
@@ -162,4 +153,5 @@ const styles = StyleSheet.create({
         width:50, 
         height:50, 
     }
+
 });

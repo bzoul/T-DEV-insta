@@ -1,27 +1,16 @@
 import React from 'react'
 
-import { View, Button, StyleSheet, TouchableOpacity, Text } from "react-native";
+import {StyleSheet, TouchableOpacity, Text } from "react-native";
 
-export default function LogButton( props ) {
-  const {
-    view, title, backgroundColor
-  } = props;
-  
-  return(
-      <TouchableOpacity 
-      onPress={() =>
-          props.navigation.navigate(`${view}`)
-        }
-      style={[
-          styles.appButtonContainer,
-          backgroundColor && { backgroundColor }
-        ]}>
+
+const LogButton = ({ Press, title, backgroundColor }) => (
+    <TouchableOpacity onPress={Press} style={[
+        styles.appButtonContainer,
+        backgroundColor && { backgroundColor }
+      ]}>
       <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
-  )
-  
-}
-
+  );
 
   const styles = StyleSheet.create({
     // ...
@@ -30,10 +19,7 @@ export default function LogButton( props ) {
       backgroundColor: "#009688",
       borderRadius: 10,
       paddingVertical: 10,
-      paddingHorizontal: 12,
-      marginTop: 20,
-      marginBottom: 20,
-      
+      paddingHorizontal: 12
     },
     appButtonText: {
       fontSize: 18,
@@ -43,3 +29,5 @@ export default function LogButton( props ) {
       textTransform: "uppercase"
     }
   });
+
+export default LogButton
