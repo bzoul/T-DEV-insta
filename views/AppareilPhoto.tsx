@@ -12,6 +12,7 @@ var RNImgToBase64 = NativeModules.RNImgToBase64;
 interface State { // Added this interface for props
     torchon : RNCamera
   }
+  
 interface Props {
     navigation: any
 }

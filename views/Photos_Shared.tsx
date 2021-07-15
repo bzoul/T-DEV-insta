@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, Image, StyleSheet, FlatList, Dimensions, Text, ScrollView } from 'react-native';
-import ToolBar from '../components/blocs/ToolBar'
+import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity } from 'react-native';
 import HeaderBlock from '../components/blocs/Header'
-import BottomBar from '../components/blocs/BottomBar'
+import {NavigationInjectedProps, withNavigation} from 'react-navigation'
 
-interface State { // Added this interface for props
-
-  }
+interface Props extends NavigationInjectedProps {
+    id_photo: number
+}
 
 let pictures = require('../assets/pictures.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
 
-export class Photos_Shared extends React.Component<{},State> {
+class Photos_Shared extends React.Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,11 +21,15 @@ export class Photos_Shared extends React.Component<{},State> {
 
         return (
 
-            <View style={{ alignItems: "baseline", paddingTop: 10, paddingRight:10 }}>
+            <View style={{ alignItems: "baseline", paddingTop: 10, paddingRight: 10 }}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Photo_Selected_Shared', {
+                     id_photo : item.item.id
+                })}>
                 <Image source={{ uri: item.item.path }} style={{
                     width: (screenWidth - 20) / 3,
                     height: (screenWidth - 20) / 3,
                 }} />
+                </TouchableOpacity>
             </View>
 
 
@@ -36,9 +39,14 @@ export class Photos_Shared extends React.Component<{},State> {
     render() {
         return (
             <>
-            <ScrollView contentContainerStyle={{paddingBottom: 50}}>
+
                 <HeaderBlock />
                 <Text style={styles.title}>Photos partagées avec moi</Text>
+                <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate('Photos')}>
+                    <Image
+                    source={require('../assets/icons/backward_icon.png')}
+                    style={styles.image_backward}/>
+                </TouchableOpacity>
                 <View style={styles.photo_container}>
                     <FlatList
                         horizontal={false}
@@ -49,13 +57,12 @@ export class Photos_Shared extends React.Component<{},State> {
                     >
                     </FlatList>
                 </View>
-            </ScrollView>
-            <BottomBar/>
+
             </>
         );
     }
 }
-export default Photos_Shared;
+export default withNavigation(Photos_Shared);
 
 const styles = StyleSheet.create({
     container: {
@@ -85,8 +92,14 @@ const styles = StyleSheet.create({
         left: 20,
         fontSize: 16
     },
-    button_more: {
-
-    }
+    backward:{
+        position:'absolute',
+        right: 30,
+        top: 140,
+    },
+    image_backward: {
+        height: 40,
+        width: 40
+    },  
 
 });

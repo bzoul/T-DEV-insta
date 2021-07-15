@@ -2,11 +2,15 @@ import React from 'react';
 import { View, Image, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from 'react-native';
 import ToolBar from '../components/blocs/ToolBar'
 import HeaderBlock from '../components/blocs/Header'
-
+import {NavigationParams} from 'react-navigation'
 let pictures = require('../assets/pictures.json');
 let { width: screenWidth } = Dimensions.get('window')
 
-export class Photo_Selected_Shared extends React.Component {
+interface Props extends NavigationParams {
+
+}
+
+export class Photo_Selected_Shared extends React.Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,14 +19,21 @@ export class Photo_Selected_Shared extends React.Component {
     }
 
     render() {
+        var uri = "https://www.creativesafetysupply.com/Wrong-Way-Icon-Floor-Marking-Sign/"
+        pictures[1].map((photo)=>{
+            if(photo.id === this.props.route.params.id_photo){
+                uri = photo.path
+            }
+        })
+        console.log(this.props.route.params.id_photo)
         return (
             <>
             <View style={styles.image_container}>
                     <Image
-                        source={require('../assets/pictures_test/grandteletub.jpg')}
+                        source={{uri:uri}}
                         style={styles.image} resizeMode={'contain'} />
                 </View>
-                <TouchableOpacity style={styles.backward}>
+                <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate('Photos_Shared')}>
                     <Image
                     source={require('../assets/icons/backward_icon.png')}
                     style={styles.image_backward}/>

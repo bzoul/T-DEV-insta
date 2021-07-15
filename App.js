@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable prettier/prettier */
 
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
@@ -15,6 +17,7 @@ import Photo_Selected_Shared from './views/Photo_Selected_Shared';
 import Photos from './views/Photos';
 import Test from './views/Test';
 import Tabs from './components/blocs/ToolBar';
+import Album from './views/Album';
 
 const Stack = createStackNavigator();
 
@@ -48,7 +51,7 @@ export default function App() {
           component={Photo_Selected_Perso} 
         />
         <Stack.Screen 
-          name="Photo_Shared" 
+          name="Photos_Shared" 
           component={Photos_Shared} 
         />
         <Stack.Screen 
@@ -56,7 +59,7 @@ export default function App() {
           component={Photo_Selected_Shared} 
         />
         <Stack.Screen 
-          name="My_photos" 
+          name="My_Photos" 
           component={My_Photos} 
         />
           <Stack.Screen 
@@ -66,6 +69,10 @@ export default function App() {
         <Stack.Screen 
           name="Test" 
           component={Test} 
+        />
+        <Stack.Screen 
+          name="Album" 
+          component={Album} 
         />
       </Stack.Navigator>
     </NavigationContainer>
