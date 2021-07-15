@@ -5,7 +5,7 @@ import BottomBar from '../components/blocs/BottomBar'
 import { NavigationInjectedProps, withNavigation } from 'react-navigation'
 
 
-let albums = require('../assets/albums.json');
+let albums = require('../assets/db_test/albums.json');
 let { width: screenWidth } = Dimensions.get('window')
 
 interface Props extends NavigationInjectedProps {

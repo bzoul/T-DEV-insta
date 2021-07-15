@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, TouchableOpacity, Dimensions, Text, ScrollView } from 'react-native';
-import ToolBar from '../components/blocs/ToolBar'
-import HeaderBlock from '../components/blocs/Header'
 import {NavigationParams} from 'react-navigation'
-let pictures = require('../assets/pictures.json');
+let pictures = require('../assets/db_test/pictures.json');
 let { width: screenWidth } = Dimensions.get('window')
 
 interface Props extends NavigationParams {
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
+        height:'100%'
     },
     image_backward: {
         height: 40,

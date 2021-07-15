@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity }
 import HeaderBlock from '../components/blocs/Header'
 import {NavigationInjectedProps, withNavigation} from 'react-navigation'
 
-let pictures = require('../assets/pictures.json');
+let pictures = require('../assets/db_test/pictures.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
 
 interface Props extends NavigationInjectedProps {

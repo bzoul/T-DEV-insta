@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, Image, StyleSheet, Dimensions, Text, ScrollView, TouchableOpacity } from 'react-native';
-import ToolBar from '../components/blocs/ToolBar'
 import HeaderBlock from '../components/blocs/Header'
 import BottomBar from '../components/blocs/BottomBar'
 
-let pictures = require('../assets/pictures.json');
+let pictures = require('../assets/db_test/pictures.json');
 let { width: screenWidth } = Dimensions.get('window')
 
 interface State { // Added this interface for props
@@ -77,7 +76,7 @@ export class Photos extends React.Component<{}, State, Props>{
                         ))}
                     </ScrollView>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("Photo_Shared")}
+                        onPress={() => this.props.navigation.navigate("Photos_Shared")}
                     >
                         <Image source={require('../assets/icons/right_icon.png')} style={styles.button_more} />
                     </TouchableOpacity>

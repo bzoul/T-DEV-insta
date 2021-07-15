@@ -4,7 +4,7 @@ import HeaderBlock from '../components/blocs/Header'
 import {  NavigationParams, withNavigation, NavigationInjectedProps } from 'react-navigation'
 
 
-let albums = require('../assets/albums.json');
+let albums = require('../assets/db_test/albums.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
 
 interface PropsInject extends NavigationInjectedProps{

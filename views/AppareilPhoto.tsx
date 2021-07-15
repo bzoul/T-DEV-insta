@@ -4,53 +4,60 @@ import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } 
 import { RNCamera } from 'react-native-camera';
 import BottomBar from '../components/blocs/BottomBar'
 import RNFetchBlob from 'rn-fetch-blob';
-import {NativeModules} from 'react-native';
-global.test= 'truc';
+import { NativeModules } from 'react-native';
+global.test = 'truc';
 global.origin = 'null';
+
 var RNImgToBase64 = NativeModules.RNImgToBase64;
 
 interface State { // Added this interface for props
-    torchon : RNCamera
-  }
-  
+    torchon: RNCamera
+    loading: boolean
+}
+
 interface Props {
     navigation: any
 }
 
-export class AppareilPhoto extends React.Component<{},State, Props>{
-    constructor(props:State) {
+export class AppareilPhoto extends React.Component<{}, State, Props>{
+    constructor(props: State) {
         super(props);
         this.state = {
-            torchon : RNCamera.Constants.FlashMode.off
+            torchon: RNCamera.Constants.FlashMode.off,
+            loading: false
         };
     }
-    saveBase64Image(base64){
+    saveBase64Image(base64) {
         const dirs = RNFetchBlob.fs.dirs
         const file_path = dirs.DocumentDir + "/base64.jpg"
         RNFetchBlob.fs.unlink(file_path);
         RNFetchBlob.fs.createFile(file_path, base64, 'base64')
-            .then((res)=>{
-                console.log('test save '+res);
+            .then((res) => {
+                console.log('test save ' + res);
                 console.log('save');
             })
             .catch((error) => {
-                console.log("fetch blob "+error);
+                console.log("fetch blob " + error);
             });
+
     }
 
     async takePicture(camera) {
+        this.setState({ loading: true })
+
         const options = { quality: 0.5, base64: true };
         const data = await camera.takePictureAsync(options);
         console.log('present  ')
-        var photo =  await RNImgToBase64.getBase64String(data.uri);
+        var photo = await RNImgToBase64.getBase64String(data.uri);
         // console.log(photo);
         global.origin = data.uri;
         global.test = photo;
         this.saveBase64Image(photo);
         this.props.navigation.navigate('Test');
 
+        this.setState({ loading: false })
     };
-    
+
     async toggleTorch() {
         let tstate = this.state.torchon;
         if (tstate == RNCamera.Constants.FlashMode.off) {
@@ -60,9 +67,9 @@ export class AppareilPhoto extends React.Component<{},State, Props>{
         }
         this.setState({ torchon: tstate })
     }
-    
+
     render() {
-        const {torchon} =  this.state;
+        const { torchon } = this.state;
 
         return (
             <View style={styles.container}>
@@ -97,10 +104,17 @@ export class AppareilPhoto extends React.Component<{},State, Props>{
                         );
                         return (
                             <>
+                                {
+                                    this.state.loading ? 
+                                    <Image source={require('../assets/icons/loading.png')} 
+                                    style={{ alignItems: 'center', justifyContent: 'center', height:80, width:80}}/>
+                                    :
+                                    <></>
+                                }
                                 <TouchableOpacity style={styles.flash} onPress={() => this.toggleTorch()}>
-                                    {this.state.torchon == RNCamera.Constants.FlashMode.off?  
-                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_off_icon.png')}/> : 
-                                    <Image style = {styles.flashlite} source = {require('../assets/icons/flash_on_icon.png')}/>}
+                                    {this.state.torchon == RNCamera.Constants.FlashMode.off ?
+                                        <Image style={styles.flashlite} source={require('../assets/icons/flash_off_icon.png')} /> :
+                                        <Image style={styles.flashlite} source={require('../assets/icons/flash_on_icon.png')} />}
                                 </TouchableOpacity>
 
                                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
@@ -112,7 +126,7 @@ export class AppareilPhoto extends React.Component<{},State, Props>{
                         );
                     }}
                 </RNCamera>
-                <BottomBar navigation={this.props.navigation}/>
+                <BottomBar navigation={this.props.navigation} />
             </View >
         );
     }
@@ -146,13 +160,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 5,
         alignSelf: 'center',
-        position:"absolute",
-        top:20,
-        right:20
+        position: "absolute",
+        top: 20,
+        right: 20
     },
-    flashlite:{
-        width:50, 
-        height:50, 
+    flashlite: {
+        width: 50,
+        height: 50,
     }
 
 });

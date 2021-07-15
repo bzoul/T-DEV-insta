@@ -7,7 +7,7 @@ interface Props extends NavigationInjectedProps {
     id_photo: number
 }
 
-let pictures = require('../assets/pictures.json');
+let pictures = require('../assets/db_test/pictures.json');
 let { width: screenWidth, height: ScreenHeight } = Dimensions.get('window')
 
 class Photos_Shared extends React.Component<Props> {

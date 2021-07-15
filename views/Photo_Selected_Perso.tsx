@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, StyleSheet, FlatList, Dimensions, Text, TouchableOpacity } from 'react-native';
 import {NavigationParams} from 'react-navigation';
-let pictures = require('../assets/pictures.json');
+let pictures = require('../assets/db_test/pictures.json');
 
 interface Props extends NavigationParams {
 
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
+        height:'100%'
     },
     image_button: {
         height: 20,
