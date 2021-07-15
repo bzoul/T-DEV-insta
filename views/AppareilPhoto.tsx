@@ -1,12 +1,12 @@
 
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, AppRegistry, Button,  Dimensions, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import BottomBar from '../components/blocs/BottomBar'
 import RNFetchBlob from 'rn-fetch-blob';
 import { NativeModules } from 'react-native';
 global.test = 'truc';
 global.origin = 'null';
+let { width: screenWidth } = Dimensions.get('window')
 
 var RNImgToBase64 = NativeModules.RNImgToBase64;
 
@@ -118,15 +118,89 @@ export class AppareilPhoto extends React.Component<{}, State, Props>{
                                 </TouchableOpacity>
 
                                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-                                    <TouchableOpacity onPress={() => this.takePicture(camera)} style={styles.capture}>
-                                        <Text style={{ fontSize: 15 }}> SNAP </Text>
-                                    </TouchableOpacity>
+                                <View>
+            <View style={styles.barre}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Photos')}
+                    style={styles.Photos}
+                >
+                    <Image source={require('../assets/icons/photo_icon.png')}
+                        resizeMode='contain'
+                        style={{
+                            position: 'absolute',
+                            width: 30,
+                            height: 30,
+                            left: 5,
+                            bottom: 0
+                            //tintColor: focused ? '#e32f45' : '#748c94'
+                        }}
+                    />
+                    <Text
+                        style={{
+                            //color: focused ? '#e32f45' : '#748c94',
+                            position: 'absolute',
+                            fontSize: 10,
+
+                        }}>
+                        PHOTOS
+                    </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.AppareilPhoto}
+                onPress={() => this.takePicture(camera)}
+                >
+                    <Image
+                        source={require('../assets/icons/appareilphoto_icon.png')}
+                        resizeMode='contain'
+                        style={{
+                            position:'absolute',
+                            left:20,
+                            bottom:20,
+                            width: 30,
+                            height: 30,
+                            tintColor: '#fff'
+
+                        }}
+                    />
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Albums")}
+                style={styles.Album}
+                >
+                    <Image source={require('../assets/icons/album_icon.png')}
+                        resizeMode='contain'
+                        style={{
+                            position: 'absolute',
+                            width: 30,
+                            height: 30,
+                            right: 5,
+                            bottom: 0
+                            //tintColor: focused ? '#e32f45' : '#748c94'
+                        }}
+                    />
+                    <Text
+                        style={{
+                            //color: focused ? '#e32f45' : '#748c94',
+                            position: 'absolute',
+                            fontSize: 10,
+                            right: 0,
+                        }}>
+                        ALBUMS
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
                                 </View>
                             </>
                         );
                     }}
+                    
                 </RNCamera>
+<<<<<<< HEAD
                 <BottomBar navigation={this.props.navigation} />
+=======
+                
+>>>>>>> 9e9f52583684caad9763ce6ee0a2daf7c961f413
             </View >
         );
     }
@@ -164,9 +238,58 @@ const styles = StyleSheet.create({
         top: 20,
         right: 20
     },
+<<<<<<< HEAD
     flashlite: {
         width: 50,
         height: 50,
+=======
+    flashlite:{
+        width:50, 
+        height:50, 
+    },
+    shadow: {
+        shadowColor: '#7F5DF0',
+        shadowOffset: {
+            width: 0,
+            height: 10
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5
+    },
+    barre: {
+        borderRadius: 30,
+        // position: 'absolute',
+        bottom:50 ,
+        backgroundColor: '#8fcbbc',
+        height: 80,
+        width: screenWidth -  40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+    },
+    AppareilPhoto: {
+        position: 'absolute',
+        bottom: 5,
+        left: 125,
+        borderRadius: 35,
+        height: 70,
+        width: 70,
+        backgroundColor: '#e32f45'
+    },
+    Album: {
+        position: 'absolute',
+        width: 50,
+        height: 45,
+        left: 40
+    },
+    Photos: {
+        position: 'absolute',
+
+        width: 50,
+        height: 45,
+        right: 40
+>>>>>>> 9e9f52583684caad9763ce6ee0a2daf7c961f413
     }
 
 });
