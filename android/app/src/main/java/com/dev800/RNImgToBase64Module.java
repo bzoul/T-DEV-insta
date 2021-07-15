@@ -20,7 +20,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 
 public class RNImgToBase64Module extends ReactContextBaseJavaModule {
-    static int compress = 10;
+    static int compress = 5;
 
     private final ReactApplicationContext reactContext;
 
@@ -80,6 +80,7 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
             e.printStackTrace();
         }
     }
+
 
     public static int Red (int width, int height, Bitmap image, int maxHeight, int maxWidth){
         int divise = 1;
@@ -149,3 +150,4 @@ public class RNImgToBase64Module extends ReactContextBaseJavaModule {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }
+

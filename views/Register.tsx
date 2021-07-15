@@ -3,6 +3,8 @@ import { View, StyleSheet, ImageBackground, Text, Touchable } from 'react-native
 import LogButton from '../components/buttons/LogButton'
 import MyInformation from "../components/blocs/MyInformation"
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import axios from 'axios';
+
 
 interface State{
     navigation: any
@@ -11,27 +13,80 @@ interface State{
 export class Register extends React.Component<State>{
     constructor(props:State) {
         super(props);
-        this.state = {
+        this.state={
+            email: null,
+            password: null,
+            password2: null,
+            username: null         
         };
     }
 
-    async Login() {
-        console.log("login")
-    };
+    updateUsername = (data) => {
+        this.setState({username:data})
+        console.log(this.state.username)
+    }
+    
+    updateEmail = (data) => {
+        this.setState({email:data})
+        console.log(this.state.email)
+
+    }
+
+    updatePassword = (data) => {
+        this.setState({password:data})
+        console.log(this.state.password)
+
+    }
+
+    updatePassword2 = (data) => {
+        this.setState({password2:data})
+        console.log(this.state.password2)
+
+    }
+
+    log (){
+        var log = this.state.email;
+        var pass = this.state.password;
+        const json = JSON.stringify(
+                    {email: log,
+                    password: pass
+                    });
+        axios.post(
+            `https://localhost:3310/api/users/login`, json)
+          .then((response) => {
+            // handle success
+            console.log('vivant');
+            
+          },(error) => {
+        //     // handle error
+        //     console.log (log+ "  s  "+ pass)
+        //     console.log(error.request);
+        // console.log(error.message);
+        // console.log(error.config);
+        console.log('mort')
+          });
+    }
 
     render() {
         const image = { uri: "https://cdn.discordapp.com/attachments/786976841851732038/830091403409358888/dzqdzqdzqd.png" };
         return (
             <View style={styles.main_container}>
                 <ImageBackground source={image} style={styles.image}>
+                    <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate("Login")}>
+                        <Text style={{fontSize:20,fontWeight:'bold'}}> RETURN</Text>
+                    </TouchableOpacity>
                     <View style={styles.snd_container}>
-                        <MyInformation />
+                        <MyInformation 
+                        updateEmail={val => this.updateEmail(val)} 
+                        updatePassword={val => this.updatePassword(val)}
+                        updateUsername={val => this.updateUsername(val)} 
+                        updatePassword2={val => this.updatePassword2(val)}
+                    />
                         <LogButton title="REGISTER" backgroundColor="#ed1f5d" Press={() => this.props.navigation.navigate("Login")}/>
                     </View>
+                    
                 </ImageBackground>
-                <TouchableOpacity style={styles.backward} onPress={() => this.props.navigation.navigate("Login")}>
-                    <Text> backward</Text>
-                </TouchableOpacity>
+                
             </View>
         )
     }
@@ -69,8 +124,14 @@ export default Register;
             borderRadius: 5
         },
         backward: {
-            bottom: 30,
-            left: 30
+            justifyContent: 'center',
+            alignItems: 'center',
+            width:100,
+            height:30,
+            backgroundColor:'red',
+            borderWidth: 1,
+            borderRadius: 10,
+
         }
     })
 
